@@ -6,8 +6,6 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float controlSpeed = 0.5f;
     [SerializeField] float maxRoll = 30f;
     Vector3 bank;
-
-
     Vector3 newDirection;
 
     void Awake() 

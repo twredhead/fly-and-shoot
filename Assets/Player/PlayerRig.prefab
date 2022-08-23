@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1014231762955454698}
   - component: {fileID: 1014231762955454701}
   - component: {fileID: 1014231762955454700}
-  - component: {fileID: 1014231762955454699}
   m_Layer: 0
   m_Name: ShipBody
   m_TagString: Untagged
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1014231762955454699
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014231762955454697}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1014231763349888761
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +177,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1014231763391226403}
   - component: {fileID: -4200917027220663304}
+  - component: {fileID: 2360166446242596537}
   - component: {fileID: 8584964285412108829}
+  - component: {fileID: 3185020088467791123}
   m_Layer: 0
   m_Name: PlayerRig
   m_TagString: Untagged
@@ -232,6 +219,18 @@ MonoBehaviour:
   speed: 50
   controlSpeed: 0.5
   maxRoll: 30
+--- !u!114 &2360166446242596537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014231763391226402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e489545467032b4e842ca356c424876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &8584964285412108829
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -248,6 +247,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3185020088467791123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014231763391226402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7344823916129594513
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +319,6 @@ GameObject:
   - component: {fileID: 4339235535029239901}
   - component: {fileID: 5171528206671092725}
   - component: {fileID: 8408924748986306338}
-  - component: {fileID: 6798550412931477785}
   m_Layer: 0
   m_Name: WingStuff
   m_TagString: Untagged
@@ -380,16 +391,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6798550412931477785
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8355401343626884714}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

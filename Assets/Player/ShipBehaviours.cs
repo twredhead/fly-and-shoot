@@ -65,7 +65,7 @@ public class ShipBehaviours : MonoBehaviour
     {
         float angle = parent.eulerAngles.z;
 
-        // check if the x angle is between 90 and -90
+        // check if the z angle is between 90 and -90
         if(Mathf.Abs(angle) > 90)
         {   
             return true;
