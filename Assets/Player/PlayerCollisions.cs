@@ -12,15 +12,19 @@ public class PlayerCollisions : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         // when a collision happens the player dies and has to restart the level.
-        Invoke("ReloadLevel", loadDelay);
+        StartCoroutine(ReloadLevel());
 
         // To Do: Add some explosion FX and stop the player motion
     }
 
-    void ReloadLevel()
+    IEnumerator ReloadLevel()
     {
         currentScene = SceneManager.GetActiveScene();
         currentSceneIndex = currentScene.buildIndex;
+        
+        yield return  new WaitForSeconds(loadDelay);
+        
+        // after delay reload scene
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
