@@ -30,6 +30,8 @@ public class ShipBehaviours : MonoBehaviour
         bool upsideDown = AmUpsideDown();
         float roll = maxRoll;
 
+        // necessary to check if the ship is upside down as ship will roll in counterintuitive way
+        // otherwise. Switch sign of roll to compensate for being upside down.
         if(upsideDown == true)
         {
             roll = -maxRoll;
@@ -55,14 +57,15 @@ public class ShipBehaviours : MonoBehaviour
         else
         {
             Quaternion from = transform.localRotation;
-            Quaternion to = Quaternion.Euler(0f,0f,-0f);
+            Quaternion to = Quaternion.Euler(0f,0f,0f);
             transform.localRotation = Quaternion.RotateTowards(from, to, rollSpeed);
         }
                 
     }
 
     bool AmUpsideDown()
-    {
+    {   // for checking if the player rig is upside down.
+
         float angle = parent.eulerAngles.z;
 
         // check if the z angle is between 90 and -90
