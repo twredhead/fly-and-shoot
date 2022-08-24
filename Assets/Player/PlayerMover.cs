@@ -56,6 +56,7 @@ public class PlayerMover : MonoBehaviour
         transform.position += forward * Time.deltaTime * speed;
     }
 
+
     void ControlManager()
     {
         float leftRight = Input.GetAxis("Horizontal");
