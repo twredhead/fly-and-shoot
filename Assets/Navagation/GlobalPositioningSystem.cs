@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GlobalPositioningSystem : MonoBehaviour
 {   
-    float maxDistanceFromOrigin = 200;
+    [SerializeField] float maxDistanceFromOrigin = 800;
 
     Vector2 xzPosition;
 
