@@ -15,12 +15,12 @@ public class EnemyMover : MonoBehaviour
     // speed makes the enemy harder to kill, so the score should be higher with a higher speed.
     // This needs to be getable, but not changable. I am choosing to make the speed a property
     // to increase it's visibility.
-    float speed; 
+    [SerializeField] float speed; 
     public float Speed { get { return speed; } }
 
     // similar story with oscillator. If the enemy oscillates, I want to increase the score value
     // in another script.
-    bool isOscillator; 
+    [SerializeField] bool isOscillator; 
     public bool IsOscillator { get { return isOscillator; } }
 
     float randomNumber;
@@ -33,19 +33,13 @@ public class EnemyMover : MonoBehaviour
 
     void Awake()
     {   
-    
+        
         // assign a random speed between min and max speeds
         speed = Random.Range(minSpeed,maxSpeed);
-
-        Debug.Log($"speed is {speed}");
         
         randomNumber = Random.Range(0f,1f); // used to determine if enemy is oscillator or not.
-        Debug.Log($"randomNumber is {randomNumber}");
 
-    
         isOscillator = ShouldOscillate(randomNumber);
-
-        Debug.Log($"isOscillator is {isOscillator}");
 
     }
 
