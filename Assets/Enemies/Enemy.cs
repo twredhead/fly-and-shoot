@@ -2,17 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
-{
-    // Start is called before the first frame update
+{   
+    GlobalPositioningSystem gps;
+    LevelManager lvlManager;
+
     void Start()
+    {   
+        gps = FindObjectOfType<GlobalPositioningSystem>();
+        lvlManager = FindObjectOfType<LevelManager>();
+    }   
+
+    void Update() 
     {
-        
+        AmInGameArea();
     }
 
-    // Update is called once per frame
-    void Update()
+    void AmInGameArea()
     {
-        
+        if(gps.OutOfBounds(transform) == false){ return; }
+
+        StartCoroutine(Deactivate());
     }
+
+    IEnumerator Deactivate()
+    {   
+        // wait 5 seconds then reset the position to that of the parent.
+        yield return new WaitForSeconds(5f);
+    
+        transform.position = transform.parent.position;
+        
+        gameObject.SetActive(false);    
+    }
+
+
+
+     
 }

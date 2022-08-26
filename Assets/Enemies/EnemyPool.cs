@@ -35,7 +35,7 @@ public class EnemyPool : MonoBehaviour
 
 
 
-    void Update() 
+    void Start() 
     {
         StartCoroutine(EnemyDispenser());
     }
@@ -49,6 +49,7 @@ public class EnemyPool : MonoBehaviour
             if(!enemy.activeInHierarchy)
             {
                 enemy.SetActive(true);
+                return;
             }
         }
 

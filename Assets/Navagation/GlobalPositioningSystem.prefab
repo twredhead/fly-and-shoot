@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371b917e3e6373c468f5856ca0d7e685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistanceFromOrigin: 800
