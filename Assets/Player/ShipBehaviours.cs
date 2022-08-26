@@ -18,12 +18,9 @@ public class ShipBehaviours : MonoBehaviour
     }
 
     void Update() 
-    {   
-        
-        Roll();    
-        
+    {      
+        Roll();        
     }
-
 
     void Roll()
     {   

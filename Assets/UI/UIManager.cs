@@ -13,8 +13,6 @@ public class UIManager : MonoBehaviour
         DisplayWarning(false); 
     }
 
-
-
     public void WarnPlayer(bool trueOrFalse, float time, float maxTime)
     {
         DisplayWarning(trueOrFalse);
