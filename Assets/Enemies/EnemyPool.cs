@@ -10,16 +10,15 @@ public class EnemyPool : MonoBehaviour
     [SerializeField] GameObject enemyPrefab;
     
     [SerializeField] float spawnTime = 5f;
-
+    
     GameObject[] pool;
 
+    float pi = Mathf.PI;
+
      
-
-
     void Awake()
     {
         PopulatePool();
-
     }
 
     void PopulatePool()
@@ -33,10 +32,8 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-
-
     void Start() 
-    {
+    {   
         StartCoroutine(EnemyDispenser());
     }
 
@@ -63,9 +60,8 @@ public class EnemyPool : MonoBehaviour
 
             yield return new WaitForSeconds(spawnTime);
         }
-
         
     }
-    
+
 
 }
