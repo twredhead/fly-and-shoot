@@ -7,6 +7,8 @@ public class ShipBehaviours : MonoBehaviour
     [SerializeField] float maxRoll = 30f;
     [SerializeField] float rollSpeed = 5f;
 
+    [SerializeField] GameObject[] lasers;
+
     Quaternion from;
     Quaternion to; 
 
@@ -19,7 +21,8 @@ public class ShipBehaviours : MonoBehaviour
 
     void Update() 
     {      
-        Roll();        
+        Roll();       
+        ProcessFiring(); 
     }
 
     void Roll()
@@ -73,6 +76,32 @@ public class ShipBehaviours : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    void ProcessFiring()
+    {   
+        // if pushes fire button
+        // shoot
+        // else, don't shoot
+       
+        if(Input.GetKey(KeyCode.Space))
+        {   
+            SetLasersOnOff(true);
+        }
+        else
+        {   
+            SetLasersOnOff(false);
+        }   
+
+    }
+
+    void SetLasersOnOff(bool trueOrFalse)
+    {
+        foreach(GameObject laser in lasers)
+        {
+            var emission = laser.GetComponent<ParticleSystem>().emission;
+            emission.enabled = trueOrFalse;
         }
     }
     
