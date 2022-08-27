@@ -6,6 +6,9 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI outOfBoundsWarning;
+    [SerializeField] TextMeshProUGUI scoreBoard;
+
+    int score = 0;
 
     void Awake() 
     {   
@@ -13,8 +16,12 @@ public class UIManager : MonoBehaviour
         DisplayWarning(false); 
     }
 
+    /*****************************************************************************************************************************/
+    /*********************************************************** Warn Player Methods *********************************************/
+    /*****************************************************************************************************************************/    
     public void WarnPlayer(bool trueOrFalse, float time, float maxTime)
     {
+        DisplayScore();
         DisplayWarning(trueOrFalse);
         UpdateWarning(time, maxTime);
     }
@@ -35,8 +42,33 @@ public class UIManager : MonoBehaviour
         else
         {
             outOfBoundsWarning.text = "Out of Time: You Will DIE!";
-        }
+        }  
+    }
+
+    /*****************************************************************************************************************************/
+    /*********************************************************** Score Methods ***************************************************/
+    /*****************************************************************************************************************************/
+    void DisplayScore()
+    {
+        scoreBoard.enabled = true;
         
+        if(score < 1)
+        {
+            
+            scoreBoard.text = "Start!";
+
+        }
+        else
+        {
+        
+            scoreBoard.text = "Score: " + score;
+
+        }
+    }
+
+    public void UpdateScore(int addToScore)
+    {   
+        score += addToScore;
     }
 
 
