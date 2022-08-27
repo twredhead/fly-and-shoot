@@ -28,7 +28,6 @@ public class EnemyMover : MonoBehaviour
     
         float sineWave = SineWave(enemyScript.IsOscillator);
         
-
         transform.Translate(0, sineWave, enemyScript.Speed * Time.deltaTime);
     }
 

@@ -5,31 +5,36 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {   
-
+    /******************************************************* Required Scripts *********************************************************/
     GlobalPositioningSystem gps;
     LevelManager lvlManager;
 
+    /******************************************************* Serialized Fields ********************************************************/
+
     [SerializeField] float maxSpeed = 45f;
     [SerializeField] float minSpeed = 25f;
-    
-    [SerializeField] float oscillationMagnitude = 0.2f;
-    public float OscillationMagnitude { get { return oscillationMagnitude; } }
 
-    // oscillator enemies should happen approximately P = 1-oscillatorChance
+    // probability of being an oscillating enemy is approx P = 1 - oscillatorChance
     [SerializeField] float oscillatorChance = 0.7f;
     
-    // speed makes the enemy harder to kill, so the score should be higher with a higher speed.
-    // This needs to be getable, but not changable. I am choosing to make the speed a property
-    // to increase it's visibility.
-    [SerializeField] float speed; 
+    /******************************************************* Properties ***************************************************************/
+    float oscillationMagnitude = 0.2f;
+    public float OscillationMagnitude { get { return oscillationMagnitude; } }
+
+    float speed; 
     public float Speed { get { return speed; } }
 
-    // similar story with oscillator. If the enemy oscillates, I want to increase the score value
-    // in another script.
-    [SerializeField] bool isOscillator; 
+    bool isOscillator; 
     public bool IsOscillator { get { return isOscillator; } }
 
+    /******************************************************* Private Fields ***********************************************************/
+
+    // the range of xy positions that the enemies can spawn in
+    float [] xRange = {-700,700};
+    float [] yRange = {250, 500};
+
     float randomNumber;
+    float waitTime = 2f;
 
 
     /******************************************************************************************************************************/
@@ -43,6 +48,16 @@ public class Enemy : MonoBehaviour
 
     void InitializeParameters()
     {
+        
+        // set up initial position of enemy
+        float zPos = transform.parent.position.z;
+        float xPos = Random.Range(xRange[0],xRange[1]);
+        float yPos = Random.Range(yRange[0],yRange[1]);
+
+        Vector3 initialPosition = new Vector3(xPos,yPos,zPos);
+
+        transform.position = initialPosition;
+
         // assign a random speed between min and max speeds
         speed = Random.Range(minSpeed,maxSpeed);
         
@@ -87,9 +102,7 @@ public class Enemy : MonoBehaviour
     IEnumerator Deactivate()
     {   
         // wait 5 seconds then reset the position to that of the parent.
-        yield return new WaitForSeconds(5f);
-    
-        transform.position = transform.parent.position;
+        yield return new WaitForSeconds(waitTime);
 
         InitializeParameters(); // reinitialize the parameters of the enemy s.t. the enemy types stay random.
         
