@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Levels/Insturctions.unity
+    guid: 2c145e1d80c3b7a409cb564803d7eccb
+  - enabled: 1
     path: Assets/Levels/MountainsAndHills.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1

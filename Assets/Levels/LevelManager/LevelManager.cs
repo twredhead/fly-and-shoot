@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,8 +22,17 @@ public class LevelManager : MonoBehaviour
         currentSceneIndex = currentScene.buildIndex;
     }
 
-    void Update()
+    void StartGame()
     {
+        if(currentSceneIndex == 0 && Input.GetKey(KeyCode.Space))
+        {
+            StartCoroutine(ReloadCoroutine(currentSceneIndex + 1, outOfBoundsReloadTime));
+        }
+    }
+
+    void Update()
+    {   
+        StartGame();
         WinOrLose();    
     }
 
