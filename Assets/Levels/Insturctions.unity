@@ -181,7 +181,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Good Luck!
+  m_text: 'Press Space to Play
+
+    Good Luck!
 
 '
   m_isRightToLeft: 0
@@ -246,7 +248,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -229.78333, y: -83.557556, z: -248.72406, w: 82.252014}
+  m_margin: {x: -229.78333, y: -112.798325, z: -248.72406, w: 82.252014}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -356,7 +358,7 @@ RectTransform:
   - {fileID: 1211750597}
   - {fileID: 16876222}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -447,7 +449,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1145873346
+--- !u!1001 &1204812466
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -456,7 +458,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6077505469806411995, guid: 0584bd174a245324880bc0bebb6cca9b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6077505469806411995, guid: 0584bd174a245324880bc0bebb6cca9b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -568,11 +570,11 @@ MonoBehaviour:
     If too many enemies get by you lose.
 
     If
-    you get a score of 10,000 you win!
+    you get a score of 1000 you win!
 
 
-    Press A or D for Left or Right. S or
-    W for Up or Down.
+    Press A or D for Left or Right. S or W
+    for Up or Down.
 
     Space is Shoot'
   m_isRightToLeft: 0

@@ -32,10 +32,18 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {   
+        Escape();
         StartGame();
         WinOrLose();    
     }
 
+    void Escape()
+    {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
     void WinOrLose()
     {
         int totalSceneCount = SceneManager.sceneCountInBuildSettings;
