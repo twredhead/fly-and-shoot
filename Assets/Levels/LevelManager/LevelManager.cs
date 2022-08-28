@@ -8,6 +8,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] float deathReloadTime = 1f;
     [SerializeField] float outOfBoundsReloadTime = 0f;
 
+
+    float currentScore = 0;
+    public float CurrentScore { get { return currentScore; } } 
+
     Scene currentScene;
     int currentSceneIndex;
 
@@ -44,5 +48,38 @@ public class LevelManager : MonoBehaviour
 
         return time;
 
+    }
+
+    public void UpdateScore(int addToScore)
+    {   
+        currentScore += addToScore;
+    }
+
+    void Update()
+    {
+        WinOrLose();    
+    }
+
+    void WinOrLose()
+    {
+        int totalSceneCount = SceneManager.sceneCountInBuildSettings;
+        int loseSceneIndex = totalSceneCount - 2;
+        int winSceneIndex = totalSceneCount - 1;
+
+        if(currentScore < 0)
+        {
+            StartCoroutine(ChangeSceneDelay(loseSceneIndex));
+        }
+        if(currentScore >= 5000)
+        {
+            StartCoroutine(ChangeSceneDelay(winSceneIndex));
+        }
+    }
+
+    IEnumerator ChangeSceneDelay(int sceneIndex)
+    {
+        yield return new WaitForSeconds(1);
+        
+        SceneManager.LoadScene(sceneIndex);
     }
 }

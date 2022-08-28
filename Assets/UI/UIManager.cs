@@ -5,13 +5,14 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    LevelManager lvlManager;
     [SerializeField] TextMeshProUGUI outOfBoundsWarning;
     [SerializeField] TextMeshProUGUI scoreBoard;
 
-    int score = 0;
-
     void Awake() 
     {   
+        lvlManager = FindObjectOfType<LevelManager>();
+
         // disable on awake. This will only be enabled when out of bounds
         DisplayWarning(false); 
     }
@@ -52,7 +53,7 @@ public class UIManager : MonoBehaviour
     {
         scoreBoard.enabled = true;
         
-        if(score < 1)
+        if(lvlManager.CurrentScore < 1)
         {
             
             scoreBoard.text = "Start!";
@@ -61,15 +62,12 @@ public class UIManager : MonoBehaviour
         else
         {
         
-            scoreBoard.text = "Score: " + score;
+            scoreBoard.text = "Score: " + lvlManager.CurrentScore;
 
         }
     }
 
-    public void UpdateScore(int addToScore)
-    {   
-        score += addToScore;
-    }
+
 
 
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -13,39 +12,45 @@ public class Enemy : MonoBehaviour
     /******************************************************* Serialized Fields ********************************************************/
 
     [SerializeField] float maxSpeed = 45f;
-    [SerializeField] float minSpeed = 25f;
+    [SerializeField] float minSpeed = 20f;
 
     // probability of being an oscillating enemy is approx P = 1 - oscillatorChance
     [SerializeField] float oscillatorChance = 0.7f;
+
+    [SerializeField] float oscillationPeriod = 4; // needs play testing
+    [SerializeField] int baseScoreValue = 100;
+    [SerializeField] int stealAmount = 10;
     
     /******************************************************* Properties ***************************************************************/
-    float oscillationMagnitude = 0.2f;
+    
+    float oscillationFrequency; // calculated from oscillator period in Awake()
+    public float OscillationFrequency { get { return oscillationFrequency; } }
+
+    float oscillationMagnitude = 0.05f;
     public float OscillationMagnitude { get { return oscillationMagnitude; } }
 
-    float speed; 
+    float speed; // set when enemy spawns
     public float Speed { get { return speed; } }
 
-    bool isOscillator; 
+    bool isOscillator; // set when enemy spawns
     public bool IsOscillator { get { return isOscillator; } }
-
-    [SerializeField] int hitPoints = 6;
-    public int HitPoints { get { return hitPoints; } }
-
-    public void DecrementHitPoints()
-    {
-        hitPoints--;
-    }
 
     /******************************************************* Private Fields ***********************************************************/
     Rigidbody rb;
     // the range of xy positions that the enemies can spawn in
-    float [] xRange = {-700,700};
-    float [] yRange = {250, 500};
+    float [] xRange = {-400,400};
+    float [] yRange = {250, 450};
 
     float randomNumber;
     int setHitPoints = 6;
 
-    [SerializeField] int scoreValue = 50;
+    int scoreValue;
+
+    int hitPoints = 6; // reset when enemy spawns
+    public void DecrementHitPoints()
+    {   
+        hitPoints--;
+    }
 
     /******************************************************************************************************************************/
     /******************************************************* Awake() **************************************************************/
@@ -53,6 +58,9 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {   
+        // this is set only once
+        oscillationFrequency = (2*Mathf.PI/oscillationPeriod);
+
         InitializeEnemy();
         AddRigidbody();
         uimanager = FindObjectOfType<UIManager>();
@@ -67,7 +75,6 @@ public class Enemy : MonoBehaviour
 
     void InitializeEnemy()
     {
-
         SetPosition();
 
         SetParameters();
@@ -108,13 +115,12 @@ public class Enemy : MonoBehaviour
 
     void AssignScoreValue()
     {   
-        if(isOscillator == false) { return; }
+        scoreValue = baseScoreValue;
+        
+        if(speed > 30) { scoreValue += 50; }
 
-        scoreValue += 50;
-
-        if(speed < 30) { return; }
-
-        scoreValue += 10;   
+        if(isOscillator) { scoreValue += 300; }
+  
     }
 
   
@@ -162,7 +168,7 @@ public class Enemy : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            uimanager.UpdateScore(scoreValue);
+            lvlManager.UpdateScore(scoreValue);
 
             InitializeEnemy();
             
@@ -175,6 +181,9 @@ public class Enemy : MonoBehaviour
 
             // wait 5 seconds then reset the position to that of the parent.
             yield return new WaitForSeconds(waitTime);
+
+            lvlManager.UpdateScore(-stealAmount); // if the enemy deactivates through going out of bounds
+                                                // the player is penalised.
 
             InitializeEnemy(); // reinitialize the parameters of the enemy s.t. the enemy types stay random.
             
