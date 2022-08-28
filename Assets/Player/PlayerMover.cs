@@ -27,7 +27,6 @@ public class PlayerMover : MonoBehaviour
         transform.Translate(0,0,Time.deltaTime * speed);
     }
 
-
     void PlayerMovementControls()
     {
         float leftRight = Input.GetAxis("Horizontal");

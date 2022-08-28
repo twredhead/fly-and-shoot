@@ -27,12 +27,12 @@ public class PlayerLocationManager : MonoBehaviour
 
     void Update() 
     {
-        
-        OutOfBoundsManager();
+
+        OutOfBoundsChecker();
 
     }  
 
-    void OutOfBoundsManager()
+    void OutOfBoundsChecker()
     {
 
         outOfBounds = gps.OutOfBounds(transform); // OutOfBounds returns true if player is out of bounds
@@ -48,10 +48,6 @@ public class PlayerLocationManager : MonoBehaviour
             lvlManager.OutOfBoundsReload();
         }
 
-
-    }
-
-
-        
+    }      
 
 }
