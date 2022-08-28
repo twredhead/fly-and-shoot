@@ -1,115 +1,118 @@
 
-Fly and Shoot
+Fly and Shoot Readme
 
 *************************************************************************************************************
 *************************************************************************************************************
 
-Fly and Shoot is simply game where you fly around a small world and shoot enemies. I was inspired by 
-Argon Assault, by GameDev.tv, which is a rail shooter. I thought it would be fun to take Argon Assault of the 
-rail as I do not really like that genre of games. I was going to refactor a bunch of Argon Assault code, but 
-instead I pretty much completely rewrote it. The shooting mechanics are mostly identical but that is where 
-the similarities end.
+About the game
 
-This document provides some details explaining how the scripts work together.
+This game is a practice project for getting more experience working with Unity Engine.
 
-*************************************************************************************************************
-*************************************************************************************************************
-*************************************************************************************************************
+At the start of the project my goals for the game were:
 
-Scripts with Public Methods:
+1. Allow the player to fly around the world.
+2. Have the player restart the level if they collide with anything.
+3. Stop the player from traveling out of the game world.
+4. Have enemies that fly around that the player can shoot and destroy.
 
-I noticed, when I was writing an enemy mover script, that I was rewriting code that provided a crude 
-coordinate(simply the distance from the center of the world). So, instead of having the same code in a few 
-different places, I decided to make a few scripts with public methods.
+Once these goals were completed I added some additional features:
 
-GlobalPositioningSystem (GPS):
-GPS is attached to a empty object, and it sets the empty object to be at the origin on awake.
+1. Score values for shooting down enemies. The score value depends on the speed and if the   
+    enemy oscillates or not.
+2.  There is a victory condition and a losing condition.
+3. There is an instruction scene, a losing scene, and a victory scene.
+4. Added a skybox to the main level. The skybox is from the Unity Asset Store and it is called SkyBox Volume 2 (Nebula)
 
-Public Methods:
-1. bool OutOfBounds(Transform userTransform) returns true if the user of the method has gone out of the play 
-   area.
-2. float SqrDistanceFromOrigin returns the square distance in the xz plane from the center of the world. 
+If I were to continue with this project, I would add:
 
-The idea behind these two methods was to create a fish bowl effect for the player. I wanted the player to be 
-forced to turn around when they got close to the edge of the game world. To do this, I needed to calculated 
-where the player was. 
-
-*************************************************************************************************************
-
-UIManager:
-The purpose of UIManager was to have a script that was attached to the UICanvas so that in game events could
-be displayed on the UI.
-
-Public Methods:
-1. void WarnPlayer(bool trueOrFalse, float time, float maxTime) tells the UI to display a warning to the 
-   player with a count down. This code does nothing but updates the UI every frame that it is called.
-   The idea behind this method was that the player needs to be warned that they are leaving the play
-   area. The consequences of not heeding the warning are taken care of in another script.
-   If trueOrFalse is true warning text will be displayed. Else, not. maxTime should be constant, and 
-   time should be decrimented by some value each frame. However, if you wanted to count up it could be 
-   incremented. However, the logic in a private method called UpdateWarning() in UIManager would need to
-   be changed to accomodate this. 
-2. ToDo: There should be a public method that updates the score. Every time you destroy an enemy the score 
-   should increase.
-
-*************************************************************************************************************
-
-
-LevelManager:
-LevelManager provides some public methods on how to reload the game. It also provides a versatile timer.
-
-1. void DeathReload() should be called when the player has died. I call it in a collision script attached to 
-   the player object.
-2. void OutOfBoundsReload should be called when the player has been out of bounds for too long.
-3. float Timer(float time) is just a nice timer. It returns (time - Time.deltaTime) each time it is called.
-
+1. VFX for death.
+2. VFX for level reload.
+3. VFX for winning/losing.
+4. VFX for enemy death.
+5. VFX for enemy escaping (currently they just disappear at the world edge)
+6. SFX for 1-3.
+7. In game music.
 
 *************************************************************************************************************
 *************************************************************************************************************
+
+Player Game Object
+
+The player is a game object called PlayerRig. This is an empty object that has another empty object called Ship as a child. Ship has two 3D game objects and a particle system called Laser as children. The particle system is used for shooting enemies. 
+Most of the scripts are on PlayerRig, however there is a script on the player ship which is used for firing the lasers and rotating the ship about its z axis (relative to the z axis of the parent PlayerRig). The rotations about the z axis make it look like the ship is banking left or right when the player steers the PlayerRig.
+
 *************************************************************************************************************
 
-Player Scripts:
+Scripts on PlayerRig: 
 
-The player object is made up of an empty parent object (PlayerRig) with another empty object as a child
-called Ship. Ship has a capsul and a streched cube inside as children. 
-The camera is also childed to PlayerRig so that the camera moves with the player.
+1. PlayerMover
 
-Scripts on PlayerRig:
+Purpose: Allow the player to control the direction that their ship goes. Also, cause the ship to move forward every frame.
 
-1. PlayerMover:
+Other Class References: None
 
-   PlayerMover handles the in world motion of the player.
-   1. void MoveForward(): This method locks the player into moving forward at all times. 
-      This method makes use of transform.Translate() to move the player forward each time it is called. 
-      It is called in Update such that the player moves forward each frame.
-   2. void PlayerMoevementControls(): This method allows the player to change the direction they are facing.
-      It does this with ADWS. WS control rotations about the x axis and AD control rotations about the y
-      axis. The rotations are done at the same time using Quaternion.RotateTowards(). There are no rations
-      about the z axis here. That is controlled in another script as it has nothing to do with changing 
-      direction. 
+Methods:
+1. MoveForward()
+    Called in Update(). This method causes the player to move forward (in the direction of the 
+    local z unit vector) every frame.
+2. PlayerMovementControls()
+    Called in Update(). This method uses Unity’s Input.GetAxis(“Horizontal”) and “Vertical”  to 
+    control rotations about the Y axis and X axis. This method allows the player to control which 
+    direction is forward, so it allows the player to steer PlayerRig.
 
-2.PlayerCollisions:
+2. PlayerLocationManager
 
-  PlayerCollisions handles collisions. If the player collides with anything the level is reloaded. This
-  Script calls LevelManager.DeathReload in OnCollisionEnter(). Things to consider adding to this script
-  could be some death FX, sound and visual. However, I think I will move onto another project before 
-  I add cosmetics as FX are beyond the intended scope of the project.
+Purpose: Check to see if the player has gone outside the game world. If they have, restart the level after a small delay.
 
-3. PlayerLocationManager:
-   
-   This script calculates where the player is in relation to the center of the world by making use of the
-   public methods from GlobalPositioningSystem.
-   1. void OutOfBoundsManager() calls GPS methods to check if the player is out of bounds. If so, it calls
-      methods from UIManager to update the UI to warn the player. It also calls Timer from LevelManager in
-      order to give the player a countdown. If the countdown reaches zero, LevelManager.OutOfBoundsReload()
-      is called.
+Other Class References:
+1. GlobalPositioningSystem
+2. UIManager
+3. LevelManager
 
-Scripts on Ship:
+Methods:
+1. OutOfBoundsChecker()
+    Called in Update(). This method makes use of OutOfBounds(Transform transform) from 
+    GlobalPositioningSystem to check if the player is out of bounds. If they are, they player is 
+    warned using WarnPlayer() from UIManager. If the player has not moved back into the play 
+    area after a set amount of time (decremented each frame using Timer() from LevelManager), 
+    the level is reloaded using OutOfBoundsReload() from LevelManager. 
 
-1. ShipBehaviour:
+3. PlayerCollisions
 
-   ShipBehaviour is for cosmetic things, and also for firing the lasers (todo). Currently, all it does
-   is rotate the body and wings about the z axis when A and D are pressed. This is to add a visual 
-   effect of banking. It makes it look kind of cool. Lasers will be added later. This script 
-   also checks if the ship is upside down. If it is, it reverses the direction that the ship rotates
-   about the z axis as it looks silly otherwise. 
+Purpose: Check if there has been a collision. If so, restart the level.
+
+Other Class References:
+1. LevelManager
+
+Methods: 
+This class only uses Awake() and OnCollisionEnter(). In OnCollisionEnter DeathReload(), from LevelManager, is called.
+
+*************************************************************************************************************
+
+Scripts on PlayerShip:
+
+1. ShipBehavoiurs
+    
+Purpose: Rotate PlayerShip about the Z axis when the player is using a control input (A or D). 
+               Also, handle the firing of the lasers.
+
+Other Class References: None
+
+Methods:
+
+1. Roll():
+    Called in Update(). This method handles the rotations about the local Z axis. 
+2. AmUpsideDown():
+    Called in Roll(). This method checks to see if PlayerRig is upside down. If it is, the direction of 
+    the player controlled roll direction is reversed. If this is not done, the ship rolls the wrong way 
+    while upside down and looks completely unintuitive.  
+3. ProcessFiring():
+    Called in Update(). If the spacebar is pressed, fire the lasers. 
+4. SetLasersOnOff(bool trueFalse):
+    Called in ProcessFiring(). If bool trueFalse is true, enable emission from the particle systems.
+    If bool trueFalse is false, disable emission.
+
+*************************************************************************************************************
+*************************************************************************************************************
+
+
