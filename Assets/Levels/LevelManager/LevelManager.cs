@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] float deathReloadTime = 1f;
     [SerializeField] float outOfBoundsReloadTime = 0f;
+    [SerializeField] int winCondition = 1000;
+    [SerializeField] int losCondition = 0;
 
 
     float currentScore = 0;
@@ -21,40 +23,6 @@ public class LevelManager : MonoBehaviour
         currentSceneIndex = currentScene.buildIndex;
     }
 
-    public void DeathReload()
-    {
-        StartCoroutine(ReloadCoroutine(currentSceneIndex, deathReloadTime));   
-    }
-
-    public void OutOfBoundsReload()
-    {
-        StartCoroutine(ReloadCoroutine(currentSceneIndex, outOfBoundsReloadTime));
-    }
-
-    
-    IEnumerator ReloadCoroutine(int index, float waitTime)
-    {
-        
-        yield return new WaitForSeconds(waitTime);
-
-        SceneManager.LoadScene(index);
-        
-    }
-
-    public float Timer(float time)
-    {
-
-        time -= Time.deltaTime;
-
-        return time;
-
-    }
-
-    public void UpdateScore(int addToScore)
-    {   
-        currentScore += addToScore;
-    }
-
     void Update()
     {
         WinOrLose();    
@@ -66,20 +34,51 @@ public class LevelManager : MonoBehaviour
         int loseSceneIndex = totalSceneCount - 2;
         int winSceneIndex = totalSceneCount - 1;
 
-        if(currentScore < 0)
+        if(currentScore < losCondition)
         {
-            StartCoroutine(ChangeSceneDelay(loseSceneIndex));
+            StartCoroutine(ReloadCoroutine(loseSceneIndex, deathReloadTime));
         }
-        if(currentScore >= 5000)
+        if(currentScore >= winCondition)
         {
-            StartCoroutine(ChangeSceneDelay(winSceneIndex));
+            StartCoroutine(ReloadCoroutine(winSceneIndex, deathReloadTime));
         }
     }
 
-    IEnumerator ChangeSceneDelay(int sceneIndex)
+    IEnumerator ReloadCoroutine(int index, float waitTime)
     {
-        yield return new WaitForSeconds(1);
         
-        SceneManager.LoadScene(sceneIndex);
+        yield return new WaitForSeconds(waitTime);
+
+        SceneManager.LoadScene(index);
+        
     }
+
+    /******************************************************************************************************************************/
+    /******************************************************* Public Methods *******************************************************/
+    /******************************************************************************************************************************/
+
+    public void DeathReload()
+    {
+        StartCoroutine(ReloadCoroutine(currentSceneIndex, deathReloadTime));   
+    }
+
+    public void OutOfBoundsReload()
+    {
+        StartCoroutine(ReloadCoroutine(currentSceneIndex, outOfBoundsReloadTime));
+    }
+
+    public void UpdateScore(int addToScore)
+    {   
+        currentScore += addToScore;
+    }
+
+    public float Timer(float time)
+    {
+
+        time -= Time.deltaTime;
+
+        return time;
+
+    }
+
 }
