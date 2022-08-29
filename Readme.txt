@@ -18,8 +18,8 @@ At the start of the project my goals for the game were:
 Once these goals were completed I added some additional features:
 
 1. Score values for shooting down enemies. The score value depends on the speed and if the   
-    enemy oscillates or not.
-2.  There is a victory condition and a losing condition.
+   enemy oscillates or not.
+2. There is a victory condition and a losing condition.
 3. There is an instruction scene, a losing scene, and a victory scene.
 4. Added a skybox to the main level. The skybox is from the Unity Asset Store and it is called SkyBox Volume 2 (Nebula)
 
@@ -53,12 +53,12 @@ Other Class References: None
 
 Methods:
 1. MoveForward()
-    Called in Update(). This method causes the player to move forward (in the direction of the 
-    local z unit vector) every frame.
+   Called in Update(). This method causes the player to move forward (in the direction of the 
+   local z unit vector) every frame.
 2. PlayerMovementControls()
-    Called in Update(). This method uses Unity’s Input.GetAxis(“Horizontal”) and “Vertical”  to 
-    control rotations about the Y axis and X axis. This method allows the player to control which 
-    direction is forward, so it allows the player to steer PlayerRig.
+   Called in Update(). This method uses Unity’s Input.GetAxis(“Horizontal”) and “Vertical”  to 
+   control rotations about the Y axis and X axis. This method allows the player to control which 
+   direction is forward, so it allows the player to steer PlayerRig.
 
 2. PlayerLocationManager
 
@@ -71,11 +71,11 @@ Other Class References:
 
 Methods:
 1. OutOfBoundsChecker()
-    Called in Update(). This method makes use of OutOfBounds(Transform transform) from 
-    GlobalPositioningSystem to check if the player is out of bounds. If they are, they player is 
-    warned using WarnPlayer() from UIManager. If the player has not moved back into the play 
-    area after a set amount of time (decremented each frame using Timer() from LevelManager), 
-    the level is reloaded using OutOfBoundsReload() from LevelManager. 
+   Called in Update(). This method makes use of OutOfBounds(Transform transform) from 
+   GlobalPositioningSystem to check if the player is out of bounds. If they are, they player is 
+   warned using WarnPlayer() from UIManager. If the player has not moved back into the play 
+   area after a set amount of time (decremented each frame using Timer() from LevelManager), 
+   the level is reloaded using OutOfBoundsReload() from LevelManager. 
 
 3. PlayerCollisions
 
@@ -94,23 +94,23 @@ Scripts on PlayerShip:
 1. ShipBehavoiurs
     
 Purpose: Rotate PlayerShip about the Z axis when the player is using a control input (A or D). 
-               Also, handle the firing of the lasers.
+         Also, handle the firing of the lasers.
 
 Other Class References: None
 
 Methods:
 
 1. Roll():
-    Called in Update(). This method handles the rotations about the local Z axis. 
+   Called in Update(). This method handles the rotations about the local Z axis. 
 2. AmUpsideDown():
-    Called in Roll(). This method checks to see if PlayerRig is upside down. If it is, the direction of 
-    the player controlled roll direction is reversed. If this is not done, the ship rolls the wrong way 
-    while upside down and looks completely unintuitive.  
+   Called in Roll(). This method checks to see if PlayerRig is upside down. If it is, the direction of 
+   the player controlled roll direction is reversed. If this is not done, the ship rolls the wrong way 
+   while upside down and looks completely unintuitive.  
 3. ProcessFiring():
-    Called in Update(). If the spacebar is pressed, fire the lasers. 
+   Called in Update(). If the spacebar is pressed, fire the lasers. 
 4. SetLasersOnOff(bool trueFalse):
-    Called in ProcessFiring(). If bool trueFalse is true, enable emission from the particle systems.
-    If bool trueFalse is false, disable emission.
+   Called in ProcessFiring(). If bool trueFalse is true, enable emission from the particle systems.
+   If bool trueFalse is false, disable emission.
 
 *************************************************************************************************************
 *************************************************************************************************************
